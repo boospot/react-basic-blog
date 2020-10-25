@@ -26,6 +26,12 @@ export const fetchUsers = () => async (dispatch) => {
 //     payload: response.data,
 //   });
 // };
+
+/**
+ * Memoize the function to fetch API call just once
+ * @type {(function(*, *): Promise<void>) & MemoizedFunction}
+ * @private
+ */
 const _fetchUser = _.memoize(async (id, dispatch) => {
   const response = await jsonPlaceholder.get(`/users/${id}`);
   dispatch({
