@@ -15,10 +15,10 @@ class PostList extends Component {
           <i className={"large middle aligned icon user"} />
           <div className="content">
             <div className="description">
-              <h3>{post.title}</h3>
-              <p>{post.body}</p>
+              <h3>{post.title.rendered}</h3>
+              {post.excerpt.rendered}
             </div>
-            <UserHeader userId={post.userId} />
+            <UserHeader userId={post.author} />
           </div>
         </div>
       );
