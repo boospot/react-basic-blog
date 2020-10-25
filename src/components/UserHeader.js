@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchUser } from "../actions";
 
 class UserHeader extends Component {
-  componentDidMount() {
-    this.props.fetchUser(this.props.userId);
-  }
+  // We dont need it anymore as teh userFetching is alrady donea t the time of fetching posts
+  // componentDidMount() {
+  //   this.props.fetchUser(this.props.userId);
+  // }
 
   render() {
     const user = this.props.users.find((user) => {
@@ -26,4 +26,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { fetchUser })(UserHeader);
+export default connect(mapStateToProps)(UserHeader);
