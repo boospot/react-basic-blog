@@ -2,23 +2,30 @@ import jsonPlaceholder from "../api/jsonPlaceholder";
 import _ from "lodash";
 
 export const fetchPostsAndUsers = () => async (dispatch, getState) => {
+  console.log("About to Fetch Posts");
+  const startTime = Date.now();
+
   await dispatch(fetchPosts());
+
+  console.log("Fetch Posts Complete");
+  console.log(`Fetching Posts took milli seconds: ${Date.now() - startTime}`);
 
   _.chain(getState().posts)
     .map("userId")
     .uniq()
     .forEach((id) => dispatch(fetchUser(id)))
-    .value();
+    .value(); // Its required for processing the _.chain method
+
+  // put await in front of _.chain to see how much time the chaining took
+  // console.log(`Lodash Chaining took milli seconds: ${Date.now() - startTime}`);
 };
 
-export const fetchPosts = () => {
-  return async function (dispatch, getState) {
-    const response = await jsonPlaceholder.get("/posts");
-    dispatch({
-      type: "FETCH_POSTS",
-      payload: response.data,
-    });
-  };
+export const fetchPosts = () => async (dispatch) => {
+  const response = await jsonPlaceholder.get("/posts");
+  dispatch({
+    type: "FETCH_POSTS",
+    payload: response.data,
+  });
 };
 
 export const fetchUsers = () => async (dispatch) => {
